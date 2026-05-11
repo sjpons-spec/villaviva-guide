@@ -1,0 +1,834 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Villa Viva — Guest Guide</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+<style>
+  :root {
+    --sand: #F5EFE0;
+    --sand-dark: #E8DFC8;
+    --ocean: #1A5F7A;
+    --ocean-mid: #2E7D9A;
+    --ocean-light: #E8F4F8;
+    --palm: #2D5A27;
+    --palm-light: #EBF3E8;
+    --text: #1C2B2E;
+    --text-muted: #5A7275;
+    --accent: #C4773B;
+    --white: #FFFFFF;
+    --rule: rgba(26,95,122,0.15);
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--sand);
+    color: var(--text);
+    font-size: 15px;
+    line-height: 1.65;
+    max-width: 480px;
+    margin: 0 auto;
+  }
+
+  /* HERO */
+  .hero {
+    background: var(--ocean);
+    padding: 48px 24px 36px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero::before {
+    content: '';
+    position: absolute;
+    bottom: -30px;
+    left: 0; right: 0;
+    height: 60px;
+    background: var(--sand);
+    border-radius: 50% 50% 0 0 / 100% 100% 0 0;
+  }
+  .hero-wave {
+    font-family: 'Playfair Display', serif;
+    font-size: 13px;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.6);
+    margin-bottom: 12px;
+  }
+  .hero h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: 38px;
+    font-weight: 600;
+    color: #fff;
+    line-height: 1.15;
+    margin-bottom: 8px;
+  }
+  .hero-sub {
+    font-size: 14px;
+    color: rgba(255,255,255,0.7);
+    font-weight: 300;
+  }
+
+  /* NAV PILLS */
+  .nav-strip {
+    padding: 32px 16px 8px;
+    display: flex;
+    gap: 8px;
+    overflow-x: auto;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+  }
+  .nav-strip::-webkit-scrollbar { display: none; }
+  .nav-pill {
+    flex-shrink: 0;
+    background: var(--white);
+    border: 1px solid var(--rule);
+    border-radius: 20px;
+    padding: 6px 14px;
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--ocean);
+    cursor: pointer;
+    text-decoration: none;
+    white-space: nowrap;
+    transition: all 0.15s;
+  }
+  .nav-pill:hover { background: var(--ocean); color: #fff; }
+
+  /* SECTIONS */
+  .section {
+    padding: 28px 20px;
+    border-bottom: 1px solid var(--rule);
+  }
+  .section:last-child { border-bottom: none; }
+
+  .section-label {
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    margin-bottom: 4px;
+  }
+  .section-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 22px;
+    font-weight: 600;
+    color: var(--ocean);
+    margin-bottom: 16px;
+  }
+
+  /* CARDS */
+  .card {
+    background: var(--white);
+    border-radius: 14px;
+    border: 1px solid var(--rule);
+    padding: 16px 18px;
+    margin-bottom: 12px;
+  }
+  .card:last-child { margin-bottom: 0; }
+
+  .card-title {
+    font-weight: 500;
+    font-size: 15px;
+    color: var(--text);
+    margin-bottom: 4px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .card-body {
+    font-size: 14px;
+    color: var(--text-muted);
+    line-height: 1.6;
+  }
+
+  /* BADGE */
+  .badge {
+    display: inline-block;
+    font-size: 11px;
+    font-weight: 500;
+    padding: 2px 8px;
+    border-radius: 10px;
+    letter-spacing: 0.3px;
+  }
+  .badge-ocean { background: var(--ocean-light); color: var(--ocean); }
+  .badge-palm  { background: var(--palm-light);  color: var(--palm);  }
+  .badge-accent { background: #FBF0E6; color: var(--accent); }
+  .badge-warn  { background: #FFF3E0; color: #B45309; }
+
+  /* INFO ROW */
+  .info-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    padding: 9px 0;
+    border-bottom: 1px solid var(--rule);
+    font-size: 14px;
+  }
+  .info-row:last-child { border-bottom: none; }
+  .info-label { color: var(--text-muted); flex-shrink: 0; margin-right: 12px; }
+  .info-value { font-weight: 500; text-align: right; }
+
+  /* WIFI CARD */
+  .wifi-card {
+    background: var(--ocean);
+    border-radius: 16px;
+    padding: 22px;
+    color: #fff;
+    margin-bottom: 12px;
+  }
+  .wifi-label { font-size: 11px; letter-spacing: 2px; text-transform: uppercase; opacity: 0.7; margin-bottom: 14px; }
+  .wifi-row { display: flex; justify-content: space-between; margin-bottom: 8px; font-size: 14px; }
+  .wifi-row:last-child { margin-bottom: 0; }
+  .wifi-field { opacity: 0.75; }
+  .wifi-value { font-weight: 500; font-family: 'DM Sans', monospace; }
+  #qr-wrapper {
+    background: #fff;
+    border-radius: 12px;
+    padding: 14px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 16px;
+  }
+  #qr-code canvas, #qr-code img { display: block; }
+  .wifi-hint {
+    text-align: center;
+    font-size: 12px;
+    color: var(--text-muted);
+    margin-top: 8px;
+  }
+
+  /* SCHEDULE GRID */
+  .schedule-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+  }
+  .sched-item {
+    background: var(--white);
+    border: 1px solid var(--rule);
+    border-radius: 12px;
+    padding: 13px 14px;
+  }
+  .sched-day { font-size: 11px; font-weight: 500; text-transform: uppercase; letter-spacing: 1.5px; color: var(--text-muted); margin-bottom: 4px; }
+  .sched-what { font-size: 14px; font-weight: 500; color: var(--text); }
+  .sched-detail { font-size: 13px; color: var(--text-muted); margin-top: 2px; }
+
+  /* RESTAURANT CARD */
+  .resto-card {
+    background: var(--white);
+    border-radius: 14px;
+    border: 1px solid var(--rule);
+    overflow: hidden;
+    margin-bottom: 12px;
+  }
+  .resto-card:last-child { margin-bottom: 0; }
+  .resto-header {
+    background: var(--ocean-light);
+    border-bottom: 1px solid var(--rule);
+    padding: 13px 16px 10px;
+  }
+  .resto-name { font-family: 'Playfair Display', serif; font-size: 17px; color: var(--ocean); }
+  .resto-dist { font-size: 12px; color: var(--text-muted); margin-top: 2px; }
+  .resto-body { padding: 13px 16px; }
+  .resto-detail { font-size: 13.5px; color: var(--text-muted); margin-bottom: 6px; line-height: 1.5; }
+  .resto-detail:last-child { margin-bottom: 0; }
+  .resto-detail strong { color: var(--text); font-weight: 500; }
+  .tag-row { display: flex; gap: 6px; flex-wrap: wrap; margin-top: 8px; }
+
+  /* SYSTEM STATUS */
+  .sys-card {
+    background: var(--white);
+    border-radius: 14px;
+    border: 1px solid var(--rule);
+    padding: 16px 18px;
+    margin-bottom: 12px;
+  }
+  .sys-card:last-child { margin-bottom: 0; }
+  .sys-header { display: flex; align-items: center; gap: 10px; margin-bottom: 10px; }
+  .sys-icon {
+    width: 36px; height: 36px;
+    border-radius: 10px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 18px;
+    flex-shrink: 0;
+  }
+  .sys-icon.solar   { background: #FFF3E0; }
+  .sys-icon.water   { background: var(--ocean-light); }
+  .sys-icon.net     { background: var(--palm-light); }
+  .sys-title { font-weight: 500; font-size: 15px; }
+  .sys-body { font-size: 14px; color: var(--text-muted); line-height: 1.6; }
+  .sys-note {
+    background: #FFF3E0;
+    border-left: 3px solid var(--accent);
+    border-radius: 0 8px 8px 0;
+    padding: 9px 12px;
+    font-size: 13px;
+    color: #7C4A1A;
+    margin-top: 10px;
+    line-height: 1.55;
+  }
+
+  /* AC CARD */
+  .ac-highlight {
+    background: var(--ocean-light);
+    border-radius: 12px;
+    padding: 14px 16px;
+    margin-bottom: 10px;
+    border: 1px solid rgba(26,95,122,0.12);
+  }
+  .ac-temp { font-family: 'Playfair Display', serif; font-size: 32px; color: var(--ocean); line-height: 1; }
+  .ac-label { font-size: 12px; color: var(--text-muted); margin-top: 2px; }
+
+  /* CONTACT CARD */
+  .contact-card {
+    background: var(--white);
+    border-radius: 14px;
+    border: 1px solid var(--rule);
+    padding: 18px;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin-bottom: 12px;
+    text-decoration: none;
+  }
+  .contact-avatar {
+    width: 46px; height: 46px;
+    border-radius: 50%;
+    background: var(--ocean);
+    color: #fff;
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'Playfair Display', serif;
+    font-size: 17px;
+    flex-shrink: 0;
+  }
+  .contact-name { font-weight: 500; font-size: 15px; color: var(--text); }
+  .contact-role { font-size: 13px; color: var(--text-muted); }
+  .contact-phone { font-size: 14px; color: var(--ocean); margin-top: 2px; font-weight: 500; }
+
+  /* SURF CARD */
+  .surf-card {
+    background: var(--palm-light);
+    border-radius: 14px;
+    border: 1px solid rgba(45,90,39,0.15);
+    padding: 16px 18px;
+  }
+
+  /* NOTICE BOX */
+  .notice {
+    background: #FFF3E0;
+    border: 1px solid rgba(196,119,59,0.25);
+    border-radius: 12px;
+    padding: 14px 16px;
+    font-size: 14px;
+    color: #5C3317;
+    line-height: 1.6;
+    margin-bottom: 12px;
+  }
+  .notice strong { color: var(--accent); }
+
+  /* FOOTER */
+  .footer {
+    text-align: center;
+    padding: 32px 20px 48px;
+    background: var(--ocean);
+    color: rgba(255,255,255,0.7);
+    font-size: 13px;
+  }
+  .footer-logo {
+    font-family: 'Playfair Display', serif;
+    font-size: 24px;
+    color: #fff;
+    margin-bottom: 8px;
+  }
+
+  .icon-emoji { font-size: 18px; }
+
+  @media (prefers-color-scheme: dark) {
+    body { background: #12201F; color: #E8E0D0; }
+    .card, .sched-item, .resto-card, .sys-card, .contact-card { background: #1A2E2C; border-color: rgba(255,255,255,0.08); }
+    .resto-header { background: rgba(26,95,122,0.25); }
+    .wifi-card { background: #0F3D52; }
+    .ac-highlight { background: rgba(26,95,122,0.25); }
+    .surf-card { background: rgba(45,90,39,0.2); }
+    .notice { background: rgba(196,119,59,0.12); color: #D4A57A; }
+    .sys-icon.solar { background: rgba(196,119,59,0.15); }
+    .sys-icon.water { background: rgba(26,95,122,0.25); }
+    .sys-icon.net   { background: rgba(45,90,39,0.2); }
+    .badge-ocean { background: rgba(26,95,122,0.25); }
+    .badge-palm  { background: rgba(45,90,39,0.2); }
+    #qr-wrapper { background: #fff; }
+    .nav-pill { background: #1A2E2C; border-color: rgba(255,255,255,0.1); }
+    .hero { background: #0A2535; }
+    .hero::before { background: #12201F; }
+  }
+</style>
+</head>
+<body>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-wave">Welcome to</div>
+  <h1>Villa Viva</h1>
+  <div class="hero-sub">Playa Grande, Guanacaste · Costa Rica</div>
+  <div style="margin-top:20px; display:flex; justify-content:center;">
+    <svg width="120" height="42" viewBox="0 0 120 42" fill="none" xmlns="http://www.w3.org/2000/svg" aria-label="The Hub property management">
+      <rect width="120" height="42" rx="6" fill="rgba(255,255,255,0.12)"/>
+      <!-- H icon mark -->
+      <rect x="10" y="11" width="3" height="20" fill="rgba(255,255,255,0.85)" rx="1"/>
+      <rect x="10" y="19.5" width="12" height="3" fill="rgba(255,255,255,0.85)" rx="1"/>
+      <rect x="19" y="11" width="3" height="20" fill="rgba(255,255,255,0.85)" rx="1"/>
+      <rect x="10" y="11" width="12" height="3" fill="rgba(255,255,255,0.5)" rx="1"/>
+      <rect x="10" y="28" width="12" height="3" fill="rgba(255,255,255,0.5)" rx="1"/>
+      <!-- THE HUB wordmark -->
+      <text x="38" y="25" font-family="'DM Sans', sans-serif" font-size="11" font-weight="500" letter-spacing="3" fill="rgba(255,255,255,0.85)">THE HUB</text>
+    </svg>
+  </div>
+</div>
+
+<!-- NAV PILLS -->
+<div class="nav-strip">
+  <a class="nav-pill" href="#wifi">WiFi</a>
+  <a class="nav-pill" href="#schedule">Schedule</a>
+  <a class="nav-pill" href="#rules">House Rules</a>
+  <a class="nav-pill" href="#hvac">A/C</a>
+  <a class="nav-pill" href="#systems">Systems</a>
+  <a class="nav-pill" href="#restaurants">Restaurants</a>
+  <a class="nav-pill" href="#laundry">Laundry</a>
+  <a class="nav-pill" href="#security">Security</a>
+  <a class="nav-pill" href="#surf">Surf</a>
+  <a class="nav-pill" href="#contact">Contact</a>
+</div>
+
+<!-- WIFI -->
+<div class="section" id="wifi">
+  <div class="section-label">Connect</div>
+  <div class="section-title">WiFi Access</div>
+
+  <div class="wifi-card">
+    <div class="wifi-label">Guest Network</div>
+    <div class="wifi-row">
+      <span class="wifi-field">Network</span>
+      <span class="wifi-value">VillaVivaGuest</span>
+    </div>
+    <div class="wifi-row">
+      <span class="wifi-field">Password</span>
+      <span class="wifi-value">VillaViva26!</span>
+    </div>
+    <div id="qr-wrapper">
+      <div id="qr-code"></div>
+    </div>
+  </div>
+  <div class="wifi-hint">Scan to connect instantly — no typing needed</div>
+</div>
+
+<!-- SCHEDULE -->
+<div class="section" id="schedule">
+  <div class="section-label">Property</div>
+  <div class="section-title">Weekly Schedule</div>
+
+  <div style="display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-bottom:14px;">
+    <div class="card" style="margin-bottom:0; text-align:center;">
+      <div style="font-size:11px; text-transform:uppercase; letter-spacing:1.5px; color:var(--text-muted); margin-bottom:4px;">Check-in</div>
+      <div style="font-family:'Playfair Display',serif; font-size:22px; color:var(--ocean);">4:00 PM</div>
+    </div>
+    <div class="card" style="margin-bottom:0; text-align:center;">
+      <div style="font-size:11px; text-transform:uppercase; letter-spacing:1.5px; color:var(--text-muted); margin-bottom:4px;">Checkout</div>
+      <div style="font-family:'Playfair Display',serif; font-size:22px; color:var(--ocean);">10:00 AM</div>
+    </div>
+  </div>
+
+  <div class="notice">
+    <strong>Trash days: Tuesday & Thursday.</strong> Please bring bags to the enclosure at the street entrance before 7 AM.
+  </div>
+
+  <div class="schedule-grid">
+    <div class="sched-item">
+      <div class="sched-day">Mon & Thu</div>
+      <div class="sched-what">🏊 Pool Service</div>
+      <div class="sched-detail">Fernando & Victor — cleaning and chemical check</div>
+    </div>
+    <div class="sched-item">
+      <div class="sched-day">Wednesday AM</div>
+      <div class="sched-what">🌿 Garden Service</div>
+      <div class="sched-detail">Jimmy — grounds maintenance</div>
+    </div>
+    <div class="sched-item">
+      <div class="sched-day">Always available</div>
+      <div class="sched-what">📞 The Hub</div>
+      <div class="sched-detail">Property management — always reachable</div>
+    </div>
+  </div>
+</div>
+
+<!-- HOUSE RULES -->
+<div class="section" id="rules">
+  <div class="section-label">Please Read</div>
+  <div class="section-title">House Rules</div>
+
+  <div class="card">
+    <div class="card-title">🕙 Quiet Hours — 10 PM</div>
+    <div class="card-body">Pool and outdoor areas observe a 10 PM curfew for noise. Please keep music, conversation, and pool activity at a considerate level after that time. We have wonderful neighbors and want to keep it that way.</div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">🛋️ Sofas & Curtains</div>
+    <div class="card-body">We kindly ask guests to take care with the sofas and curtains — please avoid sitting on them in wet swimwear, and please apply spray sunscreens <strong>outside</strong> before coming in. Sunscreen (especially sprays) can permanently stain fabric. A quick rinse and a towel go a long way. Thank you!</div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">🔥 Outdoor Grill</div>
+    <div class="card-body">The grill is propane-powered — the tank is located under the outdoor kitchen sink. Please make sure the grill is fully turned off after each use (both the burner knobs and the tank valve). If the tank feels low, let The Hub know.</div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">🔊 Outdoor Speakers</div>
+    <div class="card-body">The terrace speakers (upstairs and downstairs) support <strong>AirPlay 2</strong> and <strong>Google Cast</strong> — stream directly from your phone, tablet, or laptop without any additional app. Please be mindful of volume levels, especially after 10 PM.</div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">💡 Exterior Lighting</div>
+    <div class="card-body">Outdoor lights run on an automated schedule and motion detection — they will come on at dusk and respond to movement around the property. If you prefer to adjust any light manually, labeled switches throughout the home let you override individual zones as needed.</div>
+  </div>
+</div>
+
+<!-- HVAC -->
+<div class="section" id="hvac">
+  <div class="section-label">Comfort</div>
+  <div class="section-title">Air Conditioning</div>
+
+  <div class="ac-highlight">
+    <div class="ac-temp">24°C</div>
+    <div class="ac-label">Recommended setting · 75°F</div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">🚪 Door-Open Auto-Shutoff</div>
+    <div class="card-body">The A/C units are smart — if a door or window is left open, the system will automatically pause to avoid cooling the outdoors. This is normal. Simply close the door and the unit will resume.</div>
+  </div>
+
+  <div class="notice">
+    <strong>Please turn A/C off or raise the temperature when leaving a room for an extended period.</strong> Electricity in Costa Rica is expensive, and small habits go a long way. We truly appreciate it.
+  </div>
+
+  <div class="card">
+    <div class="card-title">❄️ Tips for best comfort</div>
+    <div class="card-body">Set to 24°C (75°F) for comfortable sleeping. Below 20°C is rarely needed and runs up costs quickly. Each bedroom has its own independent unit.</div>
+  </div>
+</div>
+
+<!-- SYSTEMS -->
+<div class="section" id="systems">
+  <div class="section-label">Infrastructure</div>
+  <div class="section-title">Home Systems</div>
+
+  <div class="sys-card">
+    <div class="sys-header">
+      <div class="sys-icon solar">☀️</div>
+      <div class="sys-title">Solar Power & Battery Backup</div>
+    </div>
+    <div class="sys-body">
+      Villa Viva runs on a rooftop solar array with battery backup. During the day the home operates primarily on solar. The system switches to grid power automatically at night or when batteries are low. Brief flickers during storms are normal.
+    </div>
+    <div class="sys-note" style="background:#FFF3E0; border-left-color:var(--accent);">
+      <strong>⚠️ During a power outage:</strong> if A/C units are left running at full power, the battery will drain quickly and you may lose all power — including lights and refrigeration. Please turn off A/C or limit it to 1–2 rooms during an outage. Some non-essential appliances may also disable automatically to protect critical functions. Power typically restores within a few minutes; if not, contact The Hub.
+    </div>
+  </div>
+
+  <div class="sys-card">
+    <div class="sys-header">
+      <div class="sys-icon water">💧</div>
+      <div class="sys-title">Water — Reserve, Filtration & Softening</div>
+    </div>
+    <div class="sys-body">
+      The property has a dedicated water storage reserve that keeps the home supplied even when municipal pressure fluctuates — common in Guanacaste. Water is automatically pumped to maintain consistent pressure. The home also has its own filtration and softening system, so tap water throughout the house is clean and treated. <strong style="color:var(--text)">No action needed during normal use.</strong>
+    </div>
+    <div class="sys-note">If water pressure seems low throughout the whole house (not just one fixture), let The Hub know. Low pressure at a single tap usually just means that fixture's aerator needs a rinse.</div>
+    <div class="sys-note" style="background:var(--ocean-light); border-left-color:var(--ocean); color:#1A3D52; margin-top:8px;">
+      <strong>💧 Water conservation:</strong> The Palm Beach Estates neighborhood is served by a local water system that periodically rations supply, especially during the dry season. Please be mindful — shorter showers, turning off taps while soaping up, and running full laundry loads all help. We appreciate it.
+    </div>
+  </div>
+
+  <div class="sys-card">
+    <div class="sys-header">
+      <div class="sys-icon net">📶</div>
+      <div class="sys-title">Internet & TV</div>
+    </div>
+    <div class="sys-body">
+      The home has Liberty Cable internet with a backup connection — if one goes down, the system switches automatically. Speeds are solid for streaming, video calls, and general use. Smart TVs in each bedroom connect to your Netflix, YouTube, or other streaming accounts. Sign in normally; for privacy, please log out at checkout.
+    </div>
+    <div class="sys-note">If the internet drops, wait 2 minutes for automatic failover. If it doesn't recover, restart the router in the main living area (hold the button 10 seconds). Still no luck? Contact The Hub.</div>
+  </div>
+</div>
+
+<!-- RESTAURANTS -->
+<div class="section" id="restaurants">
+  <div class="section-label">Eat & Drink</div>
+  <div class="section-title">Our Favorite Spots</div>
+
+  <div class="notice" style="border-color:rgba(45,90,39,0.25); background:var(--palm-light); color:#1D3D1A;">
+    <strong>The Hub is happy to help with reservations, tours, and local recommendations.</strong> Reach out any time — they know the neighborhood well and can arrange almost anything.
+  </div>
+
+  <div class="resto-card">
+    <div class="resto-header">
+      <div class="resto-name">Café Mar Azul</div>
+      <div class="resto-dist">~80 meters from Villa Viva · Our #1 pick</div>
+    </div>
+    <div class="resto-body">
+      <div class="resto-detail">The neighborhood gem, right on your doorstep. Beloved for fresh breakfasts, quality cocktails, and a relaxed tropical vibe. Standout dishes include the breakfast tacos, fish dishes (the mahi and sea bass are excellent), and traditional Costa Rican <em>casados</em>. Victor and the team treat regulars like family. Don't leave without trying the banana bread ice cream sandwich.</div>
+      <div class="resto-detail"><strong>Hours:</strong> 8 AM – 9 PM · Closed Tuesdays</div>
+      <div class="resto-detail"><strong>Happy hour:</strong> 3–5 PM daily — 2-for-1 cocktail of the day, beer & bocas</div>
+      <div class="resto-detail"><strong>Live music:</strong> Wednesdays & Sundays</div>
+      <div class="resto-detail"><strong>Tip:</strong> Reservations strongly recommended for dinner, especially on music nights.</div>
+      <div class="tag-row">
+        <span class="badge badge-palm">Breakfast · Lunch · Dinner</span>
+        <span class="badge badge-ocean">Veg / Vegan / GF options</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="resto-card">
+    <div class="resto-header">
+      <div class="resto-name">Cantarana</div>
+      <div class="resto-dist">~200 meters from Villa Viva</div>
+    </div>
+    <div class="resto-body">
+      <div class="resto-detail">Elevated terrace dining with a relaxed tropical atmosphere. Known for fresh tuna poke bowls, shrimp tacos, and seasonal pizzas. Great for a quieter, more intimate dinner.</div>
+      <div class="resto-detail"><strong>Happy hour:</strong> 4–6 PM daily</div>
+      <div class="resto-detail"><strong>Closed:</strong> Wednesdays</div>
+      <div class="tag-row">
+        <span class="badge badge-ocean">Lunch · Dinner</span>
+        <span class="badge badge-accent">Seasonal Pizzas</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="resto-card">
+    <div class="resto-header">
+      <div class="resto-name">Cuckoo's Nest</div>
+      <div class="resto-dist">~450m from Villa Viva · Walkable · Near Palm Beach Market & Palm Beach Inn</div>
+    </div>
+    <div class="resto-body">
+      <div class="resto-detail">A newer addition to the neighborhood with a fun, casual vibe and a broad menu. Great for a relaxed meal any time of day — the beach ceviche is a local favorite, and the BBQ nights are worth planning around. Conveniently close to the Palm Beach Market if you need to pick anything up on the way.</div>
+      <div class="resto-detail"><strong>Happy hour:</strong> 3:30–5:30 PM daily — 2-for-1 drinks</div>
+      <div class="resto-detail"><strong>BBQ Nights:</strong> Wednesdays & Saturdays</div>
+      <div class="resto-detail"><strong>Hours:</strong> Monday–Saturday from 8 AM</div>
+      <div class="tag-row">
+        <span class="badge badge-accent">Seafood · Burgers · Casados</span>
+        <span class="badge badge-ocean">BBQ Nights</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="card" style="background:var(--palm-light); border-color:rgba(45,90,39,0.18); margin-bottom:12px;">
+    <div class="card-title">🛒 Palm Beach Market</div>
+    <div class="card-body" style="margin-top:4px;">Your neighborhood convenience store — ~450m away on Malinches Street, part of the Palm Beach Inn complex. Stock up on water, snacks, drinks, local produce, and everyday essentials. A handy stop before heading to the beach or pool.</div>
+  </div>
+
+  
+
+  <div class="resto-card">
+    <div class="resto-header">
+      <div class="resto-name">RipJack Inn</div>
+      <div class="resto-dist">Playa Grande town · Short drive</div>
+    </div>
+    <div class="resto-body">
+      <div class="resto-detail">A local institution close to the ocean with a buzzing, family-friendly atmosphere. Famous for Hot Garlic Shrimp, huevos rancheros, and a great breakfast. The michelada-style beer is a must-try.</div>
+      <div class="resto-detail"><strong>Happy hour:</strong> 4–6 PM daily</div>
+      <div class="resto-detail"><strong>Margarita Monday:</strong> $5 margaritas all day</div>
+      <div class="resto-detail"><strong>Live music:</strong> Tuesdays & Fridays</div>
+      <div class="tag-row">
+        <span class="badge badge-ocean">Breakfast · Lunch · Dinner</span>
+        <span class="badge badge-palm">Family Friendly</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="resto-card">
+    <div class="resto-header">
+      <div class="resto-name">Pots & Bowls</div>
+      <div class="resto-dist">Playa Grande town · Short drive</div>
+    </div>
+    <div class="resto-body">
+      <div class="resto-detail">A beloved Playa Grande institution and one of the most-reviewed spots in the area. Set in a charming garden patio with a bohemian vibe, it serves wholesome, fresh food all day — from açaí and smoothie bowls to fish tacos, tuna poke, casados, and a standout Angus burger. The coconut pancakes and cold-pressed juices are regulars on everyone's favorites list. Also has a small gift shop with local art and plants.</div>
+      <div class="resto-detail"><strong>Good for:</strong> Breakfast, brunch, lunch, and dinner — menu served all day</div>
+      <div class="resto-detail"><strong>Tip:</strong> Great for families and dietary needs — staff are accommodating with gluten-free, dairy-free, and vegan requests.</div>
+      <div class="tag-row">
+        <span class="badge badge-palm">Breakfast · Bowls · Tacos</span>
+        <span class="badge badge-ocean">Vegan / GF / Allergy-friendly</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="resto-card">
+    <div class="resto-header">
+      <div class="resto-name">Pots &amp; Bowls</div>
+      <div class="resto-dist">Playa Grande town · Short drive</div>
+    </div>
+    <div class="resto-body">
+      <div class="resto-detail">A beloved Playa Grande institution and one of the most-reviewed spots in the area. Set in a charming garden patio with a bohemian vibe, it serves wholesome, fresh food all day — from açaí and smoothie bowls to fish tacos, tuna poke, casados, and a standout Angus burger. The coconut pancakes, cold-pressed juices, and homemade brownies with artisanal ice cream are regulars on everyone's favorites list. Also has a small gift shop with local art.</div>
+      <div class="resto-detail"><strong>Good for:</strong> Breakfast, brunch, lunch &amp; dinner — menu served all day</div>
+      <div class="resto-detail"><strong>Tip:</strong> Very family-friendly with a play area, and great for dietary needs — staff are accommodating with gluten-free, dairy-free, and vegan requests.</div>
+      <div class="tag-row">
+        <span class="badge badge-palm">Bowls · Tacos · Casados</span>
+        <span class="badge badge-ocean">Vegan / GF / Family-friendly</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="resto-card">
+    <div class="resto-header">
+      <div class="resto-name">Onda</div>
+      <div class="resto-dist">Playa Grande town · Short drive</div>
+    </div>
+    <div class="resto-body">
+      <div class="resto-detail">A fun, casual spot with a strong taco game and excellent cocktails at a great value.</div>
+      <div class="resto-detail"><strong>Taco Tuesday:</strong> $2 tacos all day</div>
+      <div class="resto-detail"><strong>Happy hour:</strong> 5–7 PM daily</div>
+      <div class="tag-row">
+        <span class="badge badge-accent">Tacos</span>
+        <span class="badge badge-ocean">Best Value HH</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- LAUNDRY -->
+<div class="section" id="laundry">
+  <div class="section-label">Household</div>
+  <div class="section-title">Washer &amp; Dryer</div>
+
+  <div class="card">
+    <div class="card-title">🧺 Detergent is included</div>
+    <div class="card-body">Both the washer and dryer have built-in detergent tanks that dispense automatically — you don't need to add anything unless the display indicates it is empty. Simply load your clothes, select a cycle, and start. If a machine shows a low-detergent alert, let The Hub know.</div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">♻️ A note on water</div>
+    <div class="card-body">Running full loads whenever possible helps conserve water, which is especially appreciated during the dry season when neighborhood supply can be limited.</div>
+  </div>
+</div>
+
+<!-- SECURITY -->
+<div class="section" id="security">
+  <div class="section-label">Safety</div>
+  <div class="section-title">Security &amp; Peace of Mind</div>
+
+  <div class="card">
+    <div class="card-title">😊 A safe, friendly community</div>
+    <div class="card-body">Playa Grande is a welcoming, low-key beach community. That said, a few simple habits keep everyone's stay smooth and worry-free.</div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">🔒 Front gate &amp; doors</div>
+    <div class="card-body">Please keep the front gate closed and locked at all times, and lock the house doors when leaving the property. We also ask that you keep the front door latched even when you're inside — a light breeze can blow it open unexpectedly.</div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">🏖️ On the beach</div>
+    <div class="card-body">Don't leave valuables unattended on the beach — phones, wallets, cameras, and bags are best left at the house or kept with someone in your group at all times.</div>
+  </div>
+</div>
+
+<!-- SURF -->
+<div class="section" id="surf">
+  <div class="section-label">Ocean</div>
+  <div class="section-title">Surf & Water</div>
+
+  <div class="surf-card">
+    <div class="card-title" style="margin-bottom:8px;">🏄 Playa Grande Surf Camp</div>
+    <div class="card-body" style="margin-bottom:12px;">Our go-to for surf lessons and board rentals. Dawn and the team at Playa Grande Surf Camp are friendly, professional, and great with all skill levels — from total beginners to intermediate surfers looking to improve. They're right in the neighborhood.</div>
+    <a href="https://wa.me/50686494470" style="display:inline-block; background:var(--palm); color:#fff; border-radius:8px; padding:9px 16px; font-size:14px; font-weight:500; text-decoration:none;">💬 WhatsApp Dawn · +506 8649 4470</a>
+  </div>
+
+  <div class="card" style="margin-top:12px;">
+    <div class="card-title">🐢 Leatherback Sea Turtles</div>
+    <div class="card-body">Villa Viva sits within Las Baulas National Marine Park — one of the most important nesting sites for leatherback sea turtles in the world. Evening turtle tours are available seasonally (Oct–Mar). Ask The Hub to arrange a licensed guide. <strong>Important:</strong> if you encounter turtles or eggs on the beach, please keep your distance and do not disturb them — leatherbacks are a critically protected species and interfering (including flash photography) carries serious penalties.</div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">🛥️ Tamarindo Access</div>
+    <div class="card-body">A short boat ride across the estuary takes you to Tamarindo for restaurants, shops, and more surfing. The water taxi costs <strong>$2 USD per person</strong> each way and typically runs 8 AM – 5 PM (times vary with the tides — confirm before heading down). Alternatively, it's about 25 minutes by car.</div>
+  </div>
+</div>
+
+<!-- CONTACT -->
+<div class="section" id="contact">
+  <div class="section-label">Help</div>
+  <div class="section-title">Your Hosts</div>
+
+  <div class="card" style="border-color:rgba(45,90,39,0.2); margin-bottom:12px;">
+    <div style="display:flex; align-items:center; gap:12px; margin-bottom:10px;">
+      <div style="width:44px; height:44px; border-radius:10px; background:#3B4A2E; display:flex; align-items:center; justify-content:center; flex-shrink:0;">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+          <rect x="3" y="4" width="3.5" height="16" fill="rgba(255,255,255,0.9)" rx="0.5"/>
+          <rect x="3" y="10.5" width="18" height="3" fill="rgba(255,255,255,0.9)" rx="0.5"/>
+          <rect x="17.5" y="4" width="3.5" height="16" fill="rgba(255,255,255,0.9)" rx="0.5"/>
+          <rect x="3" y="4" width="18" height="3" fill="rgba(255,255,255,0.45)" rx="0.5"/>
+          <rect x="3" y="17" width="18" height="3" fill="rgba(255,255,255,0.45)" rx="0.5"/>
+        </svg>
+      </div>
+      <div>
+        <div style="font-weight:500; font-size:15px;">The Hub · Property Management</div>
+        <div style="font-size:13px; color:var(--text-muted);">Your local concierge in Playa Grande</div>
+      </div>
+    </div>
+    <div class="info-row">
+      <span class="info-label">💬 WhatsApp</span>
+      <a href="https://wa.me/50686679081" style="font-weight:500; color:var(--ocean); text-decoration:none;">+506 8667 9081</a>
+    </div>
+    <div class="info-row">
+      <span class="info-label">✉️ Email</span>
+      <a href="mailto:info@thehubcr.com" style="font-weight:500; color:var(--ocean); text-decoration:none;">info@thehubcr.com</a>
+    </div>
+    <div class="info-row" style="border-bottom:none;">
+      <span class="info-label">🌐 Website</span>
+      <a href="https://www.thehubcr.com" style="font-weight:500; color:var(--ocean); text-decoration:none;">thehubcr.com</a>
+    </div>
+  </div>
+
+  <div style="background:var(--ocean); border-radius:14px; padding:18px 20px; margin-bottom:12px;">
+    <div style="font-size:12px; letter-spacing:2px; text-transform:uppercase; color:rgba(255,255,255,0.65); margin-bottom:6px;">Coming back?</div>
+    <div style="font-family:'Playfair Display',serif; font-size:19px; color:#fff; margin-bottom:8px;">Book Villa Viva directly &amp; save 10%</div>
+    <div style="font-size:13.5px; color:rgba(255,255,255,0.8); margin-bottom:14px; line-height:1.55;">Skip the platform fees — guests who book directly through The Hub receive a 10% discount on future stays.</div>
+    <a href="https://www.thehubcr.com/villa-viva" style="display:inline-block; background:#fff; color:var(--ocean); border-radius:8px; padding:9px 16px; font-size:14px; font-weight:500; text-decoration:none;">Book directly → thehubcr.com/villa-viva</a>
+  </div>
+
+  <div class="card">
+    <div class="card-title">🚨 Emergencies</div>
+    <div class="card-body">For medical emergencies, dial <strong>911</strong>. The Hub is always reachable for property emergencies. The nearest full hospital is Hospital Enrique Baltodano Briceño in Liberia (~45 min).</div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">📋 Checkout Reminders</div>
+    <div class="card-body">Checkout is at 10:00 AM. Please log out of any streaming services on the TVs, leave used towels in the bathrooms, and ensure windows and doors are closed and locked. Return keys to the lockbox. The Hub will coordinate everything else — thank you!</div>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<div class="footer">
+  <div class="footer-logo">Villa Viva</div>
+  <div>Playa Grande, Guanacaste · Costa Rica</div>
+  <div style="margin-top:8px; opacity:0.5;">Pura vida 🌿</div>
+</div>
+
+<script>
+  new QRCode(document.getElementById("qr-code"), {
+    text: "WIFI:T:WPA;S:VillaVivaGuest;P:VillaViva26!;;",
+    width: 180,
+    height: 180,
+    colorDark: "#1A5F7A",
+    colorLight: "#ffffff",
+    correctLevel: QRCode.CorrectLevel.M
+  });
+</script>
+</body>
+</html>
